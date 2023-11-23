@@ -3,6 +3,8 @@ import threading
 import json
 import os
 import time
+import Node
+import base64
 
 class Peer:
     sockIn= socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Socket de entrada de pacotes
@@ -12,7 +14,8 @@ class Peer:
     pastaPeer = ""
     arquivos = []
     def __init__(self):
-        self.ipPeer = input("Digite o ip do Peer: ")
+        #self.ipPeer = input("Digite o ip do Peer: ")
+        self.ipPeer = "127.0.0.1"
         self.portaPeer = int(input("Digite a porta do Peer: "))
         self.pastaPeer = input("Digite o caminho da pasta: ")   # Digitar com ./ no inicio para entrar em pastas dentro da mesma pasta do arquivo .py
         for _, _, filename in os.walk(self.pastaPeer):          #Aqui usei parte do codigo da referencia 3 para acessar os arquivos dentro das pastas
@@ -43,6 +46,7 @@ class Peer:
                         arquivoEncontrado = True
                         file = open(self.pastaPeer +"/" + msg["DOWNLOAD"], "rb") #abre o arquivo que pertence a esse Peer
                         data = file.read()  #armazena todos os bytes do arquivo em data
+                        data = (Node.rle_encode(data)).encode('utf-8')
                         c.sendall(data)     #envia todos os dados
                         c.send(b"<END>")    #Tag que informa fim do envio
                         file.close()
@@ -104,7 +108,7 @@ class Peer:
                         else:
                             file_bytes += data          #Caso não continua recebendo arquivo
                     # TODO: Decode do arquivo recebido comprimido
-                    file.write(file_bytes[:-5])         #Quando recebe o arquivo inteiro (todos os bytes), insere no arquivo criado
+                    file.write(Node.rle_decode(file_bytes.decode('utf-8')))        #Quando recebe o arquivo inteiro (todos os bytes), insere no arquivo criado
                     file.close()                        #Fecha arquivo
                     sockOut.close()
                     print(f'Arquivo {ultimaBusca} baixado com sucesso na pasta {self.pastaPeer}')

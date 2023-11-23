@@ -6,7 +6,8 @@ class Servidor:
     serverLigado = True
     sockIn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     def __init__(self):
-        ipServer = input("Digite o ip do servidor: ")
+        #ipServer = input("Digite o ip do servidor: ")
+        ipServer = "127.0.0.1"
         portaServer = input("Digite a porta do servidor: ")
         self.sockIn.bind((ipServer, int(portaServer)))          #Definindo endereço do socket
         self.sockIn.listen(5)                                   #Socket pronto para receber conexões

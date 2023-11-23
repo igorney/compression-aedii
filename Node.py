@@ -109,9 +109,13 @@ def rle_decode(input_string):
 
 
 if __name__ == '__main__':
-    videoFile = open('video.mp4', 'rb')
-    data = base64.b64encode(videoFile.read())
-    enconded_data = rle_encode(data)
-    decoded_data = rle_decode(enconded_data)
-    enconded_data, huffman_dict = huffman_coding(data)
+    videoFile = open('./Peer1/video.mp4', 'rb')
+    data = videoFile.read()
+    enconded_data = rle_encode(base64.b64encode(data))
+    print(len(enconded_data))
+    print(len(data))
+    decoded_data = base64.b64decode(rle_decode(enconded_data))
+    print(len(decoded_data))
+    print("SUCESSO = ", data == decoded_data)
+    #enconded_data, huffman_dict = huffman_coding(data)
     # decoded_data = huffman_decoding(enconded_data, huffman_dict)
