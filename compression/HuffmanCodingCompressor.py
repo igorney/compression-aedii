@@ -1,3 +1,4 @@
+import datetime
 import heapq
 from collections import Counter
 from typing import List, Tuple
@@ -55,6 +56,7 @@ class HuffmanCoding:
         return (self.position / self.file_length * 100) if self.file_length > 0 else 0
 
     def compress(self, file: bytes) -> Tuple[bytes, int, List[Node]]:
+        start = datetime.datetime.now().microsecond
         self.position = 0
         frequency = Counter(file)
         priority_queue = [Node(value, priority) for value, priority in frequency.items()]
@@ -72,10 +74,13 @@ class HuffmanCoding:
         padded_bits = pad_bits(bits)
         compressed_bytes = bits_to_bytes(padded_bits)
         extra_bits = len(padded_bits) - total_length
-
+        end = datetime.datetime.now().microsecond
+        print(f"Time and size to compression with Huffman Coding: {abs(end - start)} ms")
+        print(f"Size of file compressed: {len(compressed_bytes)} bytes, Size of file original: {len(file)} bytes")
         return compressed_bytes, extra_bits, huffman_tree
 
     def decompress(self, compressed_file: Tuple[bytes, int, List[Node]]) -> bytes:
+        start = datetime.datetime.now().microsecond
         compressed_bytes, extra_bits, huffman_tree = compressed_file
         bits = bytes_to_bits(compressed_bytes)[:-extra_bits]
 
@@ -88,7 +93,9 @@ class HuffmanCoding:
             if tuple(current_bits) in encoding_dict:
                 decoded_bytes.append(encoding_dict[tuple(current_bits)])
                 current_bits = []
-
+        end = datetime.datetime.now().microsecond
+        print(f"Time to decompression with Huffman Coding: {abs(end - start)} ms")
+        print(f"Size of file compressed: {len(compressed_bytes)} bytes, Size of file decompressed: {len(decoded_bytes)} bytes")
         return bytes(decoded_bytes)
 
     def build_coding_dictionary(self, huffman_tree):

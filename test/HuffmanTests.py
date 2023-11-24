@@ -20,6 +20,7 @@ class HuffmanTests(unittest.TestCase):
 
         self.assertEqual(trimmed_bits.to01(), "0111000101101110110110")
 
+
     def test_decompression(self):
         content = "The quick Brown Fox jumps over the Lazy Dog"
         file = content.encode('utf-8')
