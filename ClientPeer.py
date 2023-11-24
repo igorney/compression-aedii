@@ -4,10 +4,12 @@ import json
 import os
 import time
 import Node
+from RunLengthEncodingCompressor import RunLengthEncodingCompressor
 import base64
 
 class Peer:
     sockIn= socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Socket de entrada de pacotes
+    rle = RunLengthEncodingCompressor()
     peerLigado = True
     ipPeer = 0
     portaPeer = 0
@@ -46,7 +48,9 @@ class Peer:
                         arquivoEncontrado = True
                         file = open(self.pastaPeer +"/" + msg["DOWNLOAD"], "rb") #abre o arquivo que pertence a esse Peer
                         data = file.read()  #armazena todos os bytes do arquivo em data
-                        data = (Node.rle_encode(data)).encode('utf-8')
+                        #INICIO RELOGIO
+                        data = (self.rle.compress(data))
+                        #FIM relogio
                         c.sendall(data)     #envia todos os dados
                         c.send(b"<END>")    #Tag que informa fim do envio
                         file.close()
@@ -108,7 +112,8 @@ class Peer:
                         else:
                             file_bytes += data          #Caso não continua recebendo arquivo
                     # TODO: Decode do arquivo recebido comprimido
-                    file.write(Node.rle_decode(file_bytes.decode('utf-8')))        #Quando recebe o arquivo inteiro (todos os bytes), insere no arquivo criado
+                    file.write(self.rle.decompress(file_bytes))        #Quando recebe o arquivo inteiro (todos os bytes), insere no arquivo criado
+                    #RELOGIOrle_decode
                     file.close()                        #Fecha arquivo
                     sockOut.close()
                     print(f'Arquivo {ultimaBusca} baixado com sucesso na pasta {self.pastaPeer}')
