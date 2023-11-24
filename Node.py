@@ -116,6 +116,8 @@ if __name__ == '__main__':
     print(len(enconded_data))
     print(len(data))
     decoded_data = (rle.decompress(enconded_data))
+    file = open("videoEnviado.mp4", "wb")
+    file.write(decoded_data)
     print(len(decoded_data))
     print("SUCESSO = ", data == decoded_data)
     #enconded_data, huffman_dict = huffman_coding(data)

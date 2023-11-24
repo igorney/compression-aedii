@@ -112,7 +112,7 @@ class Peer:
                         else:
                             file_bytes += data          #Caso não continua recebendo arquivo
                     # TODO: Decode do arquivo recebido comprimido
-                    file.write(self.rle.decompress(file_bytes))        #Quando recebe o arquivo inteiro (todos os bytes), insere no arquivo criado
+                    file.write(self.rle.decompress(file_bytes[:-5]))        #Quando recebe o arquivo inteiro (todos os bytes), insere no arquivo criado
                     #RELOGIOrle_decode
                     file.close()                        #Fecha arquivo
                     sockOut.close()
