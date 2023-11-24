@@ -1,10 +1,3 @@
-# A classe CompressedFile deve ser definida separadamente.
-
-# Nessa tradução, a classe RunLengthEncodingCompressor herda a interface ICompressor e implementa os métodos compress e decompress. 
-# Os métodos e propriedades são adaptados para a sintaxe Python, e as listas são usadas no lugar das List<byte> do CSharp. 
-# A classe CompressedFile mencionada deve ser definida separadamente, 
-# conforme sua implementação específica no contexto de compressão de dados.
-
 class RunLengthEncodingCompressor:
     MAX_PACKAGE_SIZE = 255
 

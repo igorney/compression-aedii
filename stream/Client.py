@@ -3,9 +3,8 @@ import threading
 import json
 import os
 import time
-import Node
-from RunLengthEncodingCompressor import RunLengthEncodingCompressor
-import base64
+from compression.RunLengthEncodingCompressor import RunLengthEncodingCompressor
+
 
 class Peer:
     sockIn= socket.socket(socket.AF_INET, socket.SOCK_STREAM) #Socket de entrada de pacotes

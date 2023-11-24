@@ -1,7 +1,6 @@
-import base64
 import datetime
 import heapq
-from RunLengthEncodingCompressor import RunLengthEncodingCompressor
+from compression.RunLengthEncodingCompressor import RunLengthEncodingCompressor
 
 class Node:
     def __init__(self, char, freq):
