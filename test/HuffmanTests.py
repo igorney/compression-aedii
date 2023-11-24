@@ -2,7 +2,7 @@ import unittest
 
 import bitarray
 
-from compression.HuffmanCoding import HuffmanCoding
+from compression.HuffmanCodingCompressor import HuffmanCoding
 
 
 class HuffmanTests(unittest.TestCase):
@@ -16,7 +16,7 @@ class HuffmanTests(unittest.TestCase):
         compressed_bytes, extra_bits, priority_queue = huffman.compress(file)
         bits = bitarray.bitarray()
         bits.frombytes(bytes(compressed_bytes))
-        trimmed_bits = huffman.bits_trimmed(bits, extra_bits)
+        trimmed_bits = bits[:-extra_bits]
 
         self.assertEqual(trimmed_bits.to01(), "0111000101101110110110")
 

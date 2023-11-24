@@ -22,11 +22,11 @@ def bytes_to_bits(bytes):
 
 
 def bits_to_bytes(bits):
-    bytes = []
+    List_bytes = []
     for i in range(0, len(bits), 8):
         byte = bits[i:i + 8]
-        bytes.append(sum([byte[i] * 2 ** (7 - i) for i in range(8)]))
-    return bytes
+        List_bytes.append(sum([byte[i] * 2 ** (7 - i) for i in range(8)]))
+    return bytearray(List_bytes)
 
 
 def pad_bits(bits):
@@ -54,7 +54,7 @@ class HuffmanCoding:
     def percentage(self):
         return (self.position / self.file_length * 100) if self.file_length > 0 else 0
 
-    def compress(self, file: bytes) -> tuple[list[int], int, List[Node]]:
+    def compress(self, file: bytes) -> Tuple[bytes, int, List[Node]]:
         self.position = 0
         frequency = Counter(file)
         priority_queue = [Node(value, priority) for value, priority in frequency.items()]
@@ -116,6 +116,3 @@ class HuffmanCoding:
             encoding_dict[tuple(current_code)] = node.value
         self.build_encoding_dict_helper(node.left, encoding_dict, current_code + [0])
         self.build_encoding_dict_helper(node.right, encoding_dict, current_code + [1])
-
-    def bits_trimmed(self, bits, extra_bits):
-        return bits[:-extra_bits]
