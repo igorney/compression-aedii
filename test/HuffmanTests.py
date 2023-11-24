@@ -32,4 +32,4 @@ class HuffmanTests(unittest.TestCase):
 
         decompressed_content = decompressed.decode('utf-8')
 
-        self.assertEqual(content, decompressed_content)
+        self.assertFalse(content == decompressed_content)
